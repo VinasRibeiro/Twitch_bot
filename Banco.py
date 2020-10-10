@@ -1,5 +1,3 @@
-
-
 from datetime import datetime, date
 from sqlalchemy import insert
 from sqlalchemy.sql import select
