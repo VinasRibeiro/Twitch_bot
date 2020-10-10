@@ -1,2 +1,3 @@
 # Twitch_bot
- 
+
+Em fabricação...
