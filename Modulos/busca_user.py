@@ -11,25 +11,13 @@ import pickle
 import random
 
 
-class Start_Selenium():    
+class Busca_users:    
   
    
     def __init__(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(5)
 
-        
-    def dark_mode(self):
-
-        driver = self.driver
-
-        # Configura o browser para dark mode
-        driver.get("about:config")
-        driver.find_element_by_id("warningButton").click()
-        driver.find_element_by_id("about-config-search").send_keys("devtools.theme")
-        driver.find_element_by_class_name("button-edit").click()
-        driver.find_elements_by_xpath("//input[@type='text']")[1].send_keys("dark")
-        driver.find_element_by_class_name("primary.button-save").click()
 
     def retorna_streamers(self,qtdstramers=50):
 
@@ -65,11 +53,13 @@ class Start_Selenium():
 
 
     def retorna_users(self,streamers):
-        #Retorna users
+
+        #Retorna users, de acordo com os streamers
         lista_response = []
         for streamer in streamers:
             response = json.loads(requests.get(f"https://tmi.twitch.tv/group/user/{streamer}/chatters").text)
             lista_response = lista_response + response["chatters"]["viewers"]
+        lista_response = list(set(lista_response))
         
         return lista_response
 
