@@ -15,8 +15,9 @@ import random
 class Bots():
 
     def __init__(self):
-
-        self.driver = webdriver.Firefox()
+        
+        fp = webdriver.FirefoxProfile("C:\\Users\\Vinicius\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\xxuk2da7.default-release")
+        self.driver = webdriver.Firefox(fp)
         self.driver.implicitly_wait(5) 
         self.b = Banco("banco")   
           
@@ -181,6 +182,29 @@ class Bots():
                 'birth_date': bt[2]
             })
         self.b.insere("bots",lista)
+
+    
+    def registra_na_twitch(self):
+        
+        driver = self.driver
+        driver.get("https://www.twitch.tv/")
+
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        for cookie in cookies:
+                driver.add_cookie(cookie)
+
+        driver.find_element_by_xpath("//*[@data-a-target='signup-button']").click()
+        driver.find_element_by_id("signup-username").clear()
+        driver.find_element_by_id("signup-username").send_keys("borbos3459j")
+        driver.find_element_by_id("password-input").clear()
+        driver.find_element_by_id("password-input").send_keys("SoTp01251213")
+        driver.find_element_by_id("password-input-confirmation").clear()
+        driver.find_element_by_id("password-input-confirmation").send_keys("SoTp01251213")
+        driver.find_elements_by_xpath("//*[@aria-label='Insira seu dia de nascimento']")[0].send_keys("12")
+        driver.find_elements_by_xpath("//*[@aria-label='Selecione seu mês de aniversário']")[0].send_keys("f")
+        driver.find_element_by_xpath("//*[@aria-label='Insira seu ano de nascimento']").send_keys("1986")
+        driver.find_element_by_id("email-input").send_keys("borbos3459j@gmail.com")
+        driver.find_element_by_xpath("//*[@data-a-target='passport-signup-button']").click()
     
     
     

@@ -8,41 +8,16 @@ import json
 import pickle
 
 
+
 class Divulgador():
 
    
     def __init__(self):
 
-        #fp = webdriver.FirefoxProfile("C:\\Users\\Vinicius\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\806re905.default-release")
-        self.driver = webdriver.Firefox()
+        fp = webdriver.FirefoxProfile("C:\\Users\\Vinicius\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\xxuk2da7.default-release")
+        self.driver = webdriver.Firefox(fp)
         self.driver.implicitly_wait(5)
-
-
-
-    def cookies(self,RW):
-
-        if RW == "abrir":
-            driver = self.driver
-            # Carrega ou salva cookies
-            cookies = pickle.load(open("cookies.pkl", "rb"))
-            for cookie in cookies:
-                driver.add_cookie(cookie)
-
-        if RW == "gravar":
-            pickle.dump(driver.get_cookies() , open("cookies.pkl","wb"))
-
-
-    def dark_mode(self):
-
-        driver = self.driver
-
-        # Configura o browser para dark mode
-        driver.get("about:config")
-        driver.find_element_by_id("warningButton").click()
-        driver.find_element_by_id("about-config-search").send_keys("devtools.theme")
-        driver.find_element_by_class_name("button-edit").click()
-        driver.find_elements_by_xpath("//input[@type='text']")[1].send_keys("dark")
-        driver.find_element_by_class_name("primary.button-save").click()
+        self.driver.get("https://www.twitch.tv/")
 
 
 
@@ -50,6 +25,11 @@ class Divulgador():
 
         driver = self.driver
 
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        for cookie in cookies:
+                driver.add_cookie(cookie)
+    
+        driver.find_element_by_xpath("//*[@data-a-target='login-button']").click()
         driver.find_element_by_xpath("//input[@id='login-username']").clear()
         driver.find_element_by_xpath("//input[@id='login-username']").send_keys(lgUser)
 
@@ -57,9 +37,8 @@ class Divulgador():
         driver.find_element_by_xpath("//input[@id='password-input']").send_keys(passUser)
         driver.find_element_by_xpath("//*[@data-a-target='passport-login-button']").click()
 
-        # Pega os coockies
         time.sleep(1)
-        pickle.dump(driver.get_cookies() , open("cookies.pkl","wb"))
+        
 
 
 
