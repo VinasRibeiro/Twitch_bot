@@ -1,3 +1,3 @@
 # Twitch_bot
 
-Em fabricação...
+Em produção.
